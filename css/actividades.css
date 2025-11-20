@@ -1470,6 +1470,30 @@ input[type="time"]::-webkit-calendar-picker-indicator {
     padding: 20px;          /* Agrega espacio interior */
 }
 
+.checkbox-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    padding: 8px 0;
+}
+
+.checkbox-item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    background: #f5f5f5;
+    padding: 6px 10px;
+    border-radius: 6px;
+    cursor: pointer;
+    border: 1px solid #ddd;
+}
+
+.checkbox-item input[type="checkbox"] {
+    width: 16px;
+    height: 16px;
+}
+
+
 
 /* Responsive Design MEJORADO */
 @media (max-width: 1400px) {

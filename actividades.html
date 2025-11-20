@@ -289,15 +289,39 @@
                                 </div>
                                 <div class="form-row">
                                     <div class="form-group full-width">
-                                        <label for="activityTareas">Tareas (Puedes seleccionar varias)</label>
-                                        <select id="activityTareas" class="form-control" multiple>
-                                            <option value="Planificación">Planificación</option>
-                                            <option value="Coordinación">Coordinación</option>
-                                            <option value="Ejecución">Ejecución</option>
-                                            <option value="Evaluación">Evaluación</option>
-                                            <option value="Seguimiento">Seguimiento</option>
-                                            <option value="Reporte">Reporte</option>
-                                        </select>
+                                        <label>Tareas (Puedes seleccionar varias)</label>
+
+                                        <div class="checkbox-group" id="activityTareas">
+                                            <label class="checkbox-item">
+                                                <input type="checkbox" value="Planificación">
+                                                Planificación
+                                            </label>
+
+                                            <label class="checkbox-item">
+                                                <input type="checkbox" value="Coordinación">
+                                                Coordinación
+                                            </label>
+
+                                            <label class="checkbox-item">
+                                                <input type="checkbox" value="Ejecución">
+                                                Ejecución
+                                            </label>
+
+                                            <label class="checkbox-item">
+                                                <input type="checkbox" value="Evaluación">
+                                                Evaluación
+                                            </label>
+
+                                            <label class="checkbox-item">
+                                                <input type="checkbox" value="Seguimiento">
+                                                Seguimiento
+                                            </label>
+
+                                            <label class="checkbox-item">
+                                                <input type="checkbox" value="Reporte">
+                                                Reporte
+                                            </label>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -511,6 +535,9 @@
             </div>
         </div>
             <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+            <script src="JS/Services/data/geographicData.js"></script>
+            <script src="JS/Services/actividadService.js"></script>
+            <script src="JS/Controllers/actividadController.js"></script>
 <script>
 document.querySelector(".logout-btn").addEventListener("click", function(e) {
     e.preventDefault(); // Evita que cambie de página de inmediato

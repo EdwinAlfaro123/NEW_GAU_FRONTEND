@@ -75,16 +75,16 @@
                         Nuevo Usuario
                     </button>
                     <div class="export-options">
-                        <button class="btn btn-secondary">
+                        <button class="btn btn-secondary" id="exportMenuToggle">
                             <i class="fas fa-download"></i>
                             Exportar
                         </button>
                         <div class="export-dropdown">
-                            <button class="export-option" data-format="excel">
+                            <button class="export-option" data-format="excel" id="exportExcelBtn">
                                 <i class="fas fa-file-excel"></i>
                                 Excel
                             </button>
-                            <button class="export-option" data-format="pdf">
+                            <button class="export-option" data-format="pdf" id="exportPdfBtn">
                                 <i class="fas fa-file-pdf"></i>
                                 PDF
                             </button>
@@ -313,9 +313,11 @@
         </div>    
 
         <script src="JS/Services/data/geographicData.js"></script>
-        <script src="JS/services/usuarioService.js"></script>
-        <script src="JS/controllers/usuarioController.js"></script>
-            <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+        <script src="JS/Services/usuarioService.js"></script>
+        <script src="JS/Controllers/usuarioController.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.28/jspdf.plugin.autotable.min.js"></script>
 <script>
 document.querySelector(".logout-btn").addEventListener("click", function(e) {
     e.preventDefault(); // Evita que cambie de página de inmediato

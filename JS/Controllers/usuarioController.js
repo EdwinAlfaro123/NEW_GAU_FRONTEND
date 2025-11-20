@@ -9,6 +9,7 @@ class UsuarioController {
 
     init() {
         this.setupEventListeners();
+        this.setupModuleEventListeners(); 
         this.cargarUsuarios();
     }
 
@@ -71,7 +72,139 @@ class UsuarioController {
             const departamento = document.getElementById("modalDepartamento").value;
             this.cargarDistritos(region, departamento, e.target.value);
         });
+
+        // Mostrar / ocultar menu Exportar
+        const exportMenuToggle = document.getElementById("exportMenuToggle");
+        const exportDropdown = document.querySelector(".export-dropdown");
+
+        exportMenuToggle.addEventListener("click", () => {
+            exportDropdown.classList.toggle("show");
+        });
+
+        // Cerrar el menú si se hace clic fuera
+        document.addEventListener("click", (e) => {
+            if (!exportMenuToggle.contains(e.target) && !exportDropdown.contains(e.target)) {
+                exportDropdown.classList.remove("show");
+            }
+        });
+
+        document.getElementById("exportPdfBtn").addEventListener("click", () => {
+            const { jsPDF } = window.jspdf;
+            const doc = new jsPDF();
+
+            this.drawFormalHeader(doc);
+
+            const table = document.querySelector(".users-table");
+
+            // --- 1. Leer encabezados ---
+            const allHeaders = Array.from(table.querySelectorAll("thead th")).map(h => h.innerText.trim());
+
+            // Quitar columnas prohibidas
+            const exclude = ["ESTADO", "ACCIONES", "ID"];
+            const filteredHeaders = allHeaders.filter(h => !exclude.includes(h));
+
+            // --- 2. Obtener índices permitidos ---
+            const allowedIndexes = allHeaders
+                .map((h, i) => (!exclude.includes(h) ? i : null))
+                .filter(i => i !== null);
+
+            // --- 3. Leer filas filtrando columnas ---
+            const filteredBody = Array.from(table.querySelectorAll("tbody tr")).map(tr => {
+                const cells = Array.from(tr.querySelectorAll("td")).map(td => td.innerText.trim());
+                return allowedIndexes.map(i => cells[i]);
+            });
+
+            // --- 4. Exportar a PDF ---
+            doc.autoTable({
+                head: [filteredHeaders],
+                body: filteredBody,
+                startY: 50,
+                theme: "grid",
+                headStyles: { fillColor: [45, 55, 72] },
+                styles: { fontSize: 9 }
+            });
+
+            doc.save("usuarios.pdf");
+
+            document.querySelector(".export-dropdown").classList.remove("show");
+        });
+
+        document.getElementById("exportExcelBtn").addEventListener("click", () => {
+            const tabla = document.querySelector(".users-table");
+
+            if (!tabla) {
+                console.error("No se encontró la tabla de usuarios");
+                return;
+            }
+
+            // Crear una copia de la tabla para no modificar la original
+            const tablaClon = tabla.cloneNode(true);
+
+            // Eliminar las últimas dos columnas (Estado y Acciones)
+            const filas = tablaClon.querySelectorAll("tr");
+            filas.forEach(fila => {
+                const celdas = fila.querySelectorAll("th, td");
+                if (celdas.length > 3) {
+                    celdas[celdas.length - 8].remove();
+                    celdas[celdas.length - 1].remove(); // Acciones
+                    celdas[celdas.length - 2].remove(); // Estado
+                }
+            });
+
+            // Encabezado del Excel
+            const encabezado = `
+                <table>
+                    <tr>
+                        <td colspan="10" style="font-size:18px; font-weight:bold; text-align:center;">
+                            Sistema de Gestión de Usuarios
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="10" style="text-align:center; font-size:14px;">
+                            Protección Civil – El Salvador
+                        </td>
+                    </tr>
+                    <tr><td></td></tr>
+                </table>
+            `;
+
+            // Unión del encabezado + tabla clonada
+            const tablaFinal = encabezado + tablaClon.outerHTML;
+
+            // Codificar para permitir tildes
+            const blob = new Blob([tablaFinal], { type: "application/vnd.ms-excel;charset=utf-8" });
+            const url = URL.createObjectURL(blob);
+
+            // Descargar archivo
+            const enlace = document.createElement("a");
+            enlace.href = url;
+            enlace.download = "usuarios.xls";
+            enlace.click();
+
+            URL.revokeObjectURL(url);
+        });
     }
+
+        drawFormalHeader(doc) {
+            // Línea superior
+            doc.setDrawColor(45, 55, 72);
+            doc.setLineWidth(0.7);
+            doc.line(10, 15, 200, 15);
+
+            // Texto institucional
+            doc.setFont("helvetica", "bold");
+            doc.setFontSize(14);
+            doc.text("PROTECCIÓN CIVIL", 105, 25, { align: "center" });
+
+            doc.setFontSize(11);
+            doc.setFont("helvetica", "normal");
+            doc.text("Sistema de Gestión de Usuarios", 105, 32, { align: "center" });
+
+            // Línea inferior
+            doc.setDrawColor(45, 55, 72);
+            doc.setLineWidth(0.7);
+            doc.line(10, 38, 200, 38);
+        }
 
     // ===============================================
     // CARGAR DATOS SEGÚN REGIÓN
