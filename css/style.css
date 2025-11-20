@@ -1753,3 +1753,82 @@ input[type="time"]::-webkit-calendar-picker-indicator {
         font-size: 0.7rem;
     }
 }
+
+/* ===========================
+   NAVBAR RESPONSIVE (MÓVILES)
+   =========================== */
+@media (max-width: 768px) {
+
+    .navbar {
+        height: auto;
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+        text-align: center;
+    }
+
+    /* LOGO AL PRINCIPIO */
+    .nav-left {
+        order: 1;
+        flex-direction: column;
+        gap: 5px;
+    }
+
+    .logo-nav {
+        width: 70px;
+    }
+
+    .nav-title {
+        font-size: 20px;
+    }
+
+    .nav-sub {
+        font-size: 13px;
+    }
+
+    /* LINKS en columna debajo del subtítulo */
+    .nav-center {
+        order: 4;
+        width: 100%;
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .nav-link {
+        width: 100%;
+        justify-content: center;
+        padding: 10px 0;
+    }
+
+    /* USUARIO */
+    .nav-right {
+        order: 6;
+        flex-direction: column;
+        gap: 10px;
+        width: 100%;
+    }
+
+    .user-circle {
+        margin: 0 auto;
+    }
+
+    .username {
+        margin-top: -5px;
+    }
+
+    /* BOTÓN CERRAR SESIÓN */
+    .logout-btn {
+        order: 7;
+        width: 100%;
+        justify-content: center;
+    }
+
+    /* ORDEN ESPECÍFICO */
+    .nav-left { order: 1; }         /* Logo + títulos */
+    .nav-title { order: 2; }
+    .nav-sub { order: 3; }
+    .nav-center { order: 4; }       /* Links */
+    .nav-right { order: 6; }        /* Usuario */
+    .logout-btn { order: 7; }       /* Cerrar sesión */
+}
