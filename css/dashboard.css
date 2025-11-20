@@ -161,9 +161,13 @@ body {
 }
 
 .card-text {
-    margin-left: 12px;
-    flex-grow: 1;
+    text-align: center;        /* Centra el texto */
+    display: flex;
+    flex-direction: column;
+    align-items: center;       /* Centra horizontalmente */
+    justify-content: center;   /* Centra verticalmente si es necesario */
 }
+
 
 .card-number {
     font-size: 28px;
@@ -171,6 +175,7 @@ body {
     color: #2e3a4d;
 }
 
-.card-icon svg {
-    display: block;
+.card-icon i {
+    font-size: 40px; /* Aumenta el tamaño del icono */
+    color: #2e3a4d;
 }

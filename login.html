@@ -53,7 +53,22 @@
 
         <a href="#" class="forgot">Olvidé mi contraseña</a>
 </div>
-
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+document.querySelector("form").addEventListener("submit", function(e) {
+    e.preventDefault(); // Evita que el formulario envíe de inmediato
+    
+    Swal.fire({
+        title: "¡Acceso exitoso!",
+        text: "Bienvenido al sistema.",
+        icon: "success",
+        confirmButtonText: "Continuar"
+    }).then(() => {
+        // Después de cerrar la alerta, redirige al dashboard
+        window.location.href = "dashboard.html";
+    });
+});
+</script>
 
 </body>
 </html>
