@@ -103,3 +103,23 @@ input {
 .forgot:hover {
     text-decoration: underline;
 }
+/* EVITAR QUE LOS INPUTS SE SALGAN DEL CONTENEDOR */
+.input-box, input {
+    box-sizing: border-box;
+}
+
+/* RESPONSIVE: AJUSTA ESPACIOS PARA QUE TODO QUEDE DENTRO */
+@media (max-width: 600px) {
+
+    .container {
+        padding: 25px 20px; /* Reduce padding interno */
+    }
+
+    .input-box {
+        padding: 12px 14px; /* Reduce padding para evitar que sobresalga */
+    }
+
+    input {
+        font-size: 14px;
+    }
+}
