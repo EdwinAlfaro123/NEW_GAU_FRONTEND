@@ -1,0 +1,331 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Gestión de Usuarios</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <link rel="stylesheet" href="CSS/style.css">
+</head>
+    <body>
+        <!-- NAVBAR -->
+    <nav class="navbar">
+
+        <!-- COLUMNA IZQUIERDA -->
+        <div class="nav-left">
+            <img src="https://www.proteccioncivil.gob.sv/wp-content/uploads/2009/06/procivil-png-peque-1.png" class="logo-nav">
+            <div>
+                <h2 class="nav-title">
+                    <a href="dashboard.html" class="nav-title-link">PROTECCIÓN CIVIL</a>
+                </h2>
+                <p class="nav-sub">SISTEMA DE GESTIÓN INTEGRAL</p>
+            </div>
+        </div>
+
+        <!-- COLUMNA CENTRAL -->
+        <div class="nav-center">
+            <a href="usuarios.html" class="nav-link nav-usuarios active">
+                <span class="icon">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2">
+                        <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                        <circle cx="9" cy="7" r="4"></circle>
+                        <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                        <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                    </svg>
+                </span>
+                Usuarios
+            </a>
+
+            <a href="actividades.html" class="nav-link nav-actividades">
+                <span class="icon">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2">
+                        <line x1="8" y1="6" x2="21" y2="6"></line>
+                        <line x1="8" y1="12" x2="21" y2="12"></line>
+                        <line x1="8" y1="18" x2="21" y2="18"></line>
+                        <circle cx="4" cy="6" r="2"></circle>
+                        <circle cx="4" cy="12" r="2"></circle>
+                        <circle cx="4" cy="18" r="2"></circle>
+                    </svg>
+                </span>
+                Actividades
+            </a>
+        </div>
+
+        <!-- COLUMNA DERECHA -->
+        <div class="nav-right">
+            <div class="user-circle">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2">
+                    <circle cx="12" cy="7" r="4"></circle>
+                    <path d="M6 21v-2a6 6 0 0 1 12 0v2"></path>
+                </svg>
+            </div>
+
+            <span class="username" id="usernameDisplay">Usuario</span>
+
+            <a href="login.html" class="logout-btn">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2">
+                    <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+                    <polyline points="16 17 21 12 16 7"></polyline>
+                    <line x1="21" y1="12" x2="9" y2="12"></line>
+                </svg>
+                Cerrar Sesión
+            </a>
+        </div>
+
+    </nav>
+
+        <div class="page-wrapper">
+            <div class="content-header">
+                <div class="page-title">
+                    <h2>Gestión de Usuarios</h2>
+                    <p>Administre los usuarios del sistema</p>
+                </div>
+                <div class="page-actions">
+                    <button class="btn btn-primary" id="newUserBtn">
+                        <i class="fas fa-plus-circle"></i>
+                        Nuevo Usuario
+                    </button>
+                    <div class="export-options">
+                        <button class="btn btn-secondary">
+                            <i class="fas fa-download"></i>
+                            Exportar
+                        </button>
+                        <div class="export-dropdown">
+                            <button class="export-option" data-format="excel">
+                                <i class="fas fa-file-excel"></i>
+                                Excel
+                            </button>
+                            <button class="export-option" data-format="pdf">
+                                <i class="fas fa-file-pdf"></i>
+                                PDF
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="filter-section">
+                <div class="filter-row">
+                    <div class="form-group">
+                        <label for="searchUser">Buscar Usuario</label>
+                        <input type="text" id="searchUser" class="form-control" placeholder="Buscar por nombre o email...">
+                    </div>
+                    <div class="form-group">
+                        <label for="filterRole">Filtrar por Rol</label>
+                        <select id="filterRole" class="form-control">
+                            <option value="">Todos los roles</option>
+                            <option value="Administrador">Administrador</option>
+                            <option value="Coordinador">Coordinador</option>
+                            <option value="Supervisor">Supervisor</option>
+                            <option value="Técnico">Técnico</option>
+                            <option value="Monitor">Monitor</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="filterStatus">Filtrar por Estado</label>
+                        <select id="filterStatusUsuario" class="form-control">
+                            <option value="">Todos los estados</option>
+                            <option value="activo">Activo</option>
+                            <option value="inactivo">Inactivo</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="filter-actions">
+                    <button class="btn btn-secondary" id="clearFilters">
+                        <i class="fas fa-times"></i>
+                        Limpiar Filtros
+                    </button>
+                    <button class="btn btn-primary" id="applyFilters">
+                        <i class="fas fa-filter"></i>
+                        Aplicar Filtros
+                    </button>
+                </div>
+            </div>
+            
+            <div class="table-container users-container">
+                <div class="table-header">
+                    <div class="table-title">Lista de Usuarios</div>
+                </div>
+                <div class="table-scroll-wrapper">
+                    <table class="users-table">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Nombre</th>
+                                <th>Email</th>
+                                <th>Teléfono</th>
+                                <th>Rol</th>
+                                <th>Región</th>
+                                <th>Estado</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody id="usersTableBody">
+                            <!-- Los usuarios se cargarán aquí dinámicamente desde la API -->
+                        </tbody>
+                    </table>
+                </div>
+                <div class="pagination">
+                    <div class="pagination-info">
+                        Mostrando <span id="usersShowing">0</span> de <span id="usersTotal">0</span> usuarios
+                    </div>
+                    <div class="pagination-controls" id="usersPagination">
+                        <!-- Controles de paginación se cargarán aquí -->
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Modal para nuevo usuario -->
+            <div class="modal" id="userModal">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h3 id="modalUserTitle">Nuevo Usuario</h3>
+                        <button class="modal-close" id="closeUserModal">&times;</button>
+                    </div>
+                    <div class="modal-body">
+                        <form id="userForm">
+                            <input type="hidden" id="userId">
+                            <div class="form-section">
+                                <h2 class="section-title">
+                                    <i class="fas fa-user"></i>
+                                    Información Personal
+                                </h2>
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label for="modalNombres" class="required">Nombres Completos</label>
+                                        <input type="text" id="modalNombres" class="form-control" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="modalTelefono" class="required">Teléfono</label>
+                                        <input type="tel" id="modalTelefono" class="form-control" required>
+                                    </div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label for="modalEmail" class="required">Correo Electrónico</label>
+                                        <input type="email" id="modalEmail" class="form-control" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="modalUnidad" class="required">Unidad Organizacional</label>
+                                        <input type="text" id="modalUnidad" class="form-control" required>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="form-section">
+                                <h2 class="section-title">
+                                    <i class="fas fa-key"></i>
+                                    Credenciales de Acceso
+                                </h2>
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label for="modalPassword" id="labelPassword" class="required">Contraseña</label>
+                                        <input type="password" id="modalPassword" name="password" class="form-control" readonly>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="modalConfirmPassword" id="labelConfirmPassword" class="required">Confirmar Contraseña</label>
+                                        <input type="password" id="modalConfirmPassword" name="confirmPassword" class="form-control" readonly>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="form-section">
+                                <h2 class="section-title">
+                                    <i class="fas fa-user-shield"></i>
+                                    Configuración de Permisos
+                                </h2>
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label for="modalRol" class="required">Rol de Usuario</label>
+                                        <select id="modalRol" class="form-control" required>
+                                            <option value="">Seleccione un rol</option>
+                                            <option value="Administrador">Administrador</option>
+                                            <option value="Coordinador">Coordinador</option>
+                                            <option value="Supervisor">Supervisor</option>
+                                            <option value="Técnico">Técnico</option>
+                                            <option value="Monitor">Monitor</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="modalRegion" class="required">Región Asignada</label>
+                                        <select id="modalRegion" class="form-control" required>
+                                            <option value="">Seleccione una región</option>
+                                            <option value="Occidental">Occidental</option>
+                                            <option value="Central">Central</option>
+                                            <option value="Paracentral">Paracentral</option>
+                                            <option value="Oriental">Oriental</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="form-section">
+                                <h2 class="section-title">
+                                    <i class="fas fa-map-marker-alt"></i>
+                                    Ubicación Geográfica
+                                </h2>
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label for="modalDepartamento" class="required">Departamento</label>
+                                        <select id="modalDepartamento" class="form-control" required>
+                                            <option value="">Seleccione un departamento</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="modalMunicipio" class="required">Municipio</label>
+                                        <select id="modalMunicipio" class="form-control" required>
+                                            <option value="">Seleccione un municipio</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label for="modalDistrito" class="required">Distrito</label>
+                                        <select id="modalDistrito" class="form-control" required>
+                                            <option value="">Seleccione un distrito</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="modalFiltrado">Configuración de Filtrado</label>
+                                        <select id="modalFiltrado" class="form-control">
+                                            <option value="No Aplica">NO APLICA</option>
+                                            <option value="Region">FILTRO REGIONAL</option>
+                                            <option value="Departamento">FILTRO DEPARTAMENTAL</option>
+                                            <option value="Municipio">FILTRO MUNICIPAL</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="form-actions">
+                                <div class="modal-footer">
+                                    <div class="footer-buttons">
+                                        <button type="button" class="btn-clear" id="clearUserForm">
+                                            <i class="fas fa-broom"></i>
+                                            Limpiar Formulario
+                                        </button>
+                                        <div class="modal-action-buttons">
+                                            <button type="button" class="btn-cancel" id="cancelUserForm">
+                                                <i class="fas fa-times"></i>
+                                                Cancelar
+                                            </button>
+                                            <button type="submit" class="btn-save">
+                                                <i class="fas fa-save"></i>
+                                                Guardar Usuario
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>    
+
+        <script src="JS/Services/data/geographicData.js"></script>
+        <script src="JS/services/usuarioService.js"></script>
+        <script src="JS/controllers/usuarioController.js"></script>
+    </body>
+</html>

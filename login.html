@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login | Protección Civil</title>
+    <link rel="stylesheet" href="css/estilos.css">
+</head>
+<body>
+
+<div class="container">
+
+        <!-- CONTENEDOR PARA ALINEAR LOGO + TÍTULO COMO EN TU IMAGEN -->
+        <div style="display:flex; align-items:center; justify-content:center; gap:20px; margin-bottom:10px;">
+            <img 
+                src="https://www.proteccioncivil.gob.sv/wp-content/uploads/2009/06/procivil-png-peque-1.png" 
+                alt="Protección Civil"
+                style="width:110px;"
+            >
+            
+            <h1 style="margin:0;">PROTECCIÓN CIVIL</h1>
+        </div>
+
+        <p class="subtitle">Autenticarse para iniciar sesión</p>
+
+        <form action="dashboard.html" method="GET">
+            <!-- EMAIL -->
+            <label>Email</label>
+            <div class="input-box">
+                <span class="icon">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#2e3a4d" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <rect x="3" y="5" width="18" height="14" rx="2" ry="2"></rect>
+                        <polyline points="3 7 12 13 21 7"></polyline>
+                    </svg>
+                </span>
+                <input type="email" name="email" placeholder="Ingrese su email" required />
+            </div>
+
+            <!-- PASSWORD -->
+            <label style="margin-top: 18px; display:block;">Contraseña</label>
+            <div class="input-box">
+                <span class="icon">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#2e3a4d" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <rect x="3" y="10" width="18" height="12" rx="2"></rect>
+                        <path d="M7 10V7a5 5 0 0 1 10 0v3"></path>
+                    </svg>
+                </span>
+                <input type="password" name="password" placeholder="Ingrese su contraseña" required />
+            </div>
+
+            <button class="btn" type="submit">Acceder</button>
+        </form>
+
+        <a href="#" class="forgot">Olvidé mi contraseña</a>
+</div>
+
+
+</body>
+</html>
