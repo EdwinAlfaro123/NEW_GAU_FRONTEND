@@ -120,25 +120,25 @@ async getAllActividades(page = 0, size = 10) {
 
     // Convertir DTO a datos del formulario
     convertirDTOAFormData(actividadDTO) {
-        return {
-            id: actividadDTO.id,
-            estado: actividadDTO.estado,
-            fecha: actividadDTO.fecha,
-            horaInicio: actividadDTO.h_inicio,
-            horaFin: actividadDTO.h_Fin,
-            region: actividadDTO.region,
-            departamento: actividadDTO.departamento,
-            municipio: actividadDTO.municipio,
-            distrito: actividadDTO.distrito,
-            actividad: actividadDTO.actividad_nombre,
-            tareas: actividadDTO.tarea ? actividadDTO.tarea.split(', ') : [],
-            participantesHombres: actividadDTO.hombres,
-            participantesMujeres: actividadDTO.mujeres,
-            resultados: actividadDTO.resultados,
-            observaciones: actividadDTO.observaciones,
-            respaldo: actividadDTO.respaldo
-        };
-    }
+    return {
+        id: actividadDTO.id,
+        estado: actividadDTO.estado,
+        fecha: actividadDTO.fecha,
+        horaInicio: actividadDTO.H_inicio,
+        horaFin: actividadDTO.H_Fin,
+        region: actividadDTO.region,
+        departamento: actividadDTO.departamento,
+        municipio: actividadDTO.municipio,
+        distrito: actividadDTO.distrito,
+        actividad: actividadDTO.actividad_nombre,
+        tareas: Array.isArray(actividadDTO.tareas) ? actividadDTO.tareas : [],
+        hombres: actividadDTO.hombres,
+        mujeres: actividadDTO.mujeres,
+        resultados: actividadDTO.resultados,
+        observaciones: actividadDTO.observaciones,
+        respaldo: actividadDTO.respaldo
+    };
+}
 
     // Obtener ID del usuario actual (simulado - en producción vendría del token/auth)
     obtenerUsuarioActualId() {

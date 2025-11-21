@@ -1,561 +1,569 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Actividades</title>
-      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="css/actividades.css">
 </head>
 
 <body>
 
     <!-- NAVBAR -->
-<nav class="navbar">
+    <nav class="navbar">
 
-    <!-- COLUMNA IZQUIERDA -->
-    <div class="nav-left">
-        <img src="https://www.proteccioncivil.gob.sv/wp-content/uploads/2009/06/procivil-png-peque-1.png" class="logo-nav">
-        <div>
-            <h2 class="nav-title">
-                <a href="dashboard.html" class="nav-title-link">PROTECCIÓN CIVIL</a>
-            </h2>
-            <p class="nav-sub">SISTEMA DE GESTIÓN INTEGRAL</p>
-        </div>
-    </div>
-
-    <!-- COLUMNA CENTRAL -->
-    <div class="nav-center">
-
-        <!-- USUARIOS -->
-        <a href="usuarios.html" class="nav-link nav-usuarios">
-            <span class="icon">
-                <i class="fa-solid fa-users"></i>
-            </span>
-            Usuarios
-        </a>
-
-        <!-- ACTIVIDADES -->
-        <a href="actividades.html" class="nav-link nav-actividades active">
-            <span class="icon">
-                <i class="fa-solid fa-list-check"></i>
-            </span>
-            Actividades
-        </a>
-
-    </div>
-
-    <!-- COLUMNA DERECHA -->
-    <div class="nav-right">
-
-        <!-- ICONO DE PERFIL -->
-        <div class="user-circle">
-            <i class="fa-solid fa-user"></i>
+        <!-- COLUMNA IZQUIERDA -->
+        <div class="nav-left">
+            <img src="https://www.proteccioncivil.gob.sv/wp-content/uploads/2009/06/procivil-png-peque-1.png"
+                class="logo-nav">
+            <div>
+                <h2 class="nav-title">
+                    <a href="dashboard.html" class="nav-title-link">PROTECCIÓN CIVIL</a>
+                </h2>
+                <p class="nav-sub">SISTEMA DE GESTIÓN INTEGRAL</p>
+            </div>
         </div>
 
-        <span class="username" id="usernameDisplay">Usuario</span>
+        <!-- COLUMNA CENTRAL -->
+        <div class="nav-center">
 
-        <!-- CERRAR SESIÓN -->
-        <a href="login.html" class="logout-btn">
-            <i class="fa-solid fa-right-from-bracket"></i>
-            Cerrar Sesión
-        </a>
-    </div>
+            <!-- USUARIOS -->
+            <a href="usuarios.html" class="nav-link nav-usuarios">
+                <span class="icon">
+                    <i class="fa-solid fa-users"></i>
+                </span>
+                Usuarios
+            </a>
 
-</nav>
+            <!-- ACTIVIDADES -->
+            <a href="actividades.html" class="nav-link nav-actividades active">
+                <span class="icon">
+                    <i class="fa-solid fa-list-check"></i>
+                </span>
+                Actividades
+            </a>
+
+        </div>
+
+        <!-- COLUMNA DERECHA -->
+        <div class="nav-right">
+
+            <!-- ICONO DE PERFIL -->
+            <div class="user-circle">
+                <i class="fa-solid fa-user"></i>
+            </div>
+
+            <span class="username" id="usernameDisplay">Usuario</span>
+
+            <!-- CERRAR SESIÓN -->
+            <a href="login.html" class="logout-btn">
+                <i class="fa-solid fa-right-from-bracket"></i>
+                Cerrar Sesión
+            </a>
+        </div>
+
+    </nav>
 
     <div class="page-wrapper">
         <div class="content-header">
-                <div class="page-title">
-                    <h2>Gestión de Actividades</h2>
-                    <p>Registre y administre las actividades del sistema</p>
-                </div>
-                <div class="page-actions">
-                    <button class="btn btn-primary" id="newActivityBtn">
-                        <i class="fas fa-plus-circle"></i>
-                        Nueva Actividad
+            <div class="page-title">
+                <h2>Gestión de Actividades</h2>
+                <p>Registre y administre las actividades del sistema</p>
+            </div>
+            <div class="page-actions">
+                <button class="btn btn-primary" id="newActivityBtn">
+                    <i class="fas fa-plus-circle"></i>
+                    Nueva Actividad
+                </button>
+                <div class="export-options">
+                    <button class="btn btn-secondary">
+                        <i class="fas fa-download"></i>
+                        Exportar
                     </button>
-                    <div class="export-options">
-                        <button class="btn btn-secondary">
-                            <i class="fas fa-download"></i>
-                            Exportar
+                    <div class="export-dropdown">
+                        <button class="export-option" data-format="excel">
+                            <i class="fas fa-file-excel"></i>
+                            Excel
                         </button>
-                        <div class="export-dropdown">
-                            <button class="export-option" data-format="excel">
-                                <i class="fas fa-file-excel"></i>
-                                Excel
-                            </button>
-                            <button class="export-option" data-format="pdf">
-                                <i class="fas fa-file-pdf"></i>
-                                PDF
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="filter-section">
-                <div class="filter-row">
-                    <div class="form-group">
-                        <label for="filterDate">Fecha</label>
-                        <input type="date" id="filterDate" class="form-control">
-                    </div>
-                    <div class="form-group">
-                        <label for="filterActivity">Actividad</label>
-                        <select id="filterActivity" class="form-control">
-                            <option value="">Todas las actividades</option>
-                            <option value="capacitacion">Capacitación</option>
-                            <option value="simulacro">Simulacro</option>
-                            <option value="inspeccion">Inspección</option>
-                            <option value="evaluacion">Evaluación</option>
-                            <option value="coordinacion">Coordinación</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="filterRegion">Región</label>
-                        <select id="filterRegion" class="form-control">
-                            <option value="">Todas las regiones</option>
-                            <option value="Central">Central</option>
-                            <option value="Este">Este</option>
-                            <option value="Norte">Norte</option>
-                            <option value="Sur">Sur</option>
-                            <option value="Oeste">Oeste</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="filterStatus">Estado</label>
-                        <select id="filterStatusActividad" class="form-control">
-                            <option value="">Todos los estados</option>
-                            <option value="Completada">Completada</option>
-                            <option value="En Progreso">En Progreso</option>
-                            <option value="Pendiente">Pendiente</option>
-                            <option value="Cancelada">Cancelada</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="filter-actions">
-                    <button class="btn btn-secondary" id="clearActivityFilters">
-                        <i class="fas fa-times"></i>
-                        Limpiar
-                    </button>
-                    <button class="btn btn-primary" id="applyActivityFilters">
-                        <i class="fas fa-filter"></i>
-                        Filtrar
-                    </button>
-                    <button class="btn btn-success" id="generateReport">
-                        <i class="fas fa-file-pdf"></i>
-                        Reporte
-                    </button>
-                </div>
-            </div>
-            
-            <div class="table-container activities-container">
-                <div class="table-header">
-                    <div class="table-title">Lista de Actividades</div>
-                    <div class="table-actions">
-                        <span class="table-info">Total: <strong id="activitiesTotal">0</strong> actividades</span>
-                    </div>
-                </div>
-                <div class="table-scroll-wrapper">
-                    <table class="activities-table">
-                        <thead>
-                            <tr>
-                                <th>ID</th> 
-                                <th>Fecha</th>
-                                <th>Actividad</th>
-                                <th>Departamento</th>
-                                <th>Municipio</th>
-                                <th>Distrito</th>
-                                <th>Usuario</th>
-                                <th>Estado</th>
-                                <th>Opciones</th>
-                            </tr>
-                        </thead>
-                        <tbody id="activitiesTableBody">
-                            <!-- Las actividades se cargarán aquí dinámicamente desde la API -->
-                        </tbody>
-                    </table>
-                </div>
-                <div class="pagination">
-                    <div class="pagination-info">
-                        Mostrando registros del <span id="activitiesFrom">0</span> al <span id="activitiesTo">0</span> de un total de <span id="activitiesTotal">0</span> registros
-                    </div>
-                    <div class="pagination-controls" id="activitiesPagination">
-                        <!-- Controles de paginación se cargarán aquí -->
-                    </div>
-                </div>
-            </div>
-            
-            <!-- Modal para nueva actividad -->
-            <div class="modal" id="activityModal">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h3 id="modalActivityTitle">Registrar Nueva Actividad</h3>
-                        <button class="modal-close" id="closeActivityModal">&times;</button>
-                    </div>
-                    <div class="modal-body">
-                        <form id="activityForm">
-                            <input type="hidden" id="activityId">
-                            <div class="form-section">
-                                <h2 class="section-title">
-                                    <i class="fas fa-info-circle"></i>
-                                    Información General
-                                </h2>
-                                <div class="form-row">
-                                    <div class="form-group">
-                                        <label for="activityEstado" class="required">Estado</label>
-                                        <select id="activityEstado" class="form-control" required>
-                                            <option value="">SELECCIONE</option>
-                                            <option value="Completada">Completada</option>
-                                            <option value="En Progreso">En Progreso</option>
-                                            <option value="Pendiente">Pendiente</option>
-                                            <option value="Cancelada">Cancelada</option>
-                                        </select>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="activityFecha" class="required">Fecha</label>
-                                        <input type="date" id="activityFecha" class="form-control" required>
-                                    </div>
-                                </div>
-                                <div class="form-row">
-                                    <div class="form-group">
-                                        <label for="activityInicio" class="required">Hora de Inicio</label>
-                                        <input type="time" id="activityInicio" class="form-control" required value="08:00">
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="activityFinalizacion" class="required">Hora de Finalización</label>
-                                        <input type="time" id="activityFinalizacion" class="form-control" required value="17:00">
-                                    </div>
-                                </div>
-                            </div>
-                            
-                            <div class="form-section">
-                                <h2 class="section-title">
-                                    <i class="fas fa-map"></i>
-                                    Ubicación
-                                </h2>
-                                <div class="form-row">
-                                    <div class="form-group">
-                                        <label for="activityRegion" class="required">Región</label>
-                                        <select id="activityRegion" class="form-control" required>
-                                            <option value="">Seleccione una region</option>
-                                            <option value="Central">Central</option>
-                                            <option value="Paracentral">Paracentral</option>
-                                            <option value="Occidental">Occidental</option>
-                                            <option value="Oriental">Oriental</option>
-                                        </select>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="activityDepartamento" class="required">Departamento</label>
-                                        <select id="activityDepartamento" class="form-control" required>
-                                            <option value="">Seleccione un departamento</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="form-row">
-                                    <div class="form-group">
-                                        <label for="activityMunicipio" class="required">Municipio</label>
-                                        <select id="activityMunicipio" class="form-control" required>
-                                            <option value="">Seleccione un municipio</option>
-                                        </select>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="activityDistrito" class="required">Distrito</label>
-                                        <select id="activityDistrito" class="form-control" required>
-                                            <option value="">Seleccione un distrito</option>
-                                        </select>
-                                    </div>
-                                </div>
-                            </div>
-                            
-                            <div class="form-section">
-                                <h2 class="section-title">
-                                    <i class="fas fa-tasks"></i>
-                                    Detalles de la Actividad
-                                </h2>
-                                <div class="form-row">
-                                    <div class="form-group full-width">
-                                        <label for="activityTipo" class="required">Tipo de Actividad</label>
-                                        <select id="activityTipo" class="form-control" required>
-                                            <option value="">Seleccione</option>
-                                            <option value="Capacitación en Liderazgo">Capacitación en Liderazgo</option>
-                                            <option value="Reunión de Coordinación">Reunión de Coordinación</option>
-                                            <option value="Visita de Supervisión">Visita de Supervisión</option>
-                                            <option value="Taller Comunitario">Taller Comunitario</option>
-                                            <option value="Monitoreo de Campo">Monitoreo de Campo</option>
-                                            <option value="Evaluación de Proyectos">Evaluación de Proyectos</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="form-row">
-                                    <div class="form-group full-width">
-                                        <label>Tareas (Puedes seleccionar varias)</label>
-
-                                        <div class="checkbox-group" id="activityTareas">
-                                            <label class="checkbox-item">
-                                                <input type="checkbox" value="Planificación">
-                                                Planificación
-                                            </label>
-
-                                            <label class="checkbox-item">
-                                                <input type="checkbox" value="Coordinación">
-                                                Coordinación
-                                            </label>
-
-                                            <label class="checkbox-item">
-                                                <input type="checkbox" value="Ejecución">
-                                                Ejecución
-                                            </label>
-
-                                            <label class="checkbox-item">
-                                                <input type="checkbox" value="Evaluación">
-                                                Evaluación
-                                            </label>
-
-                                            <label class="checkbox-item">
-                                                <input type="checkbox" value="Seguimiento">
-                                                Seguimiento
-                                            </label>
-
-                                            <label class="checkbox-item">
-                                                <input type="checkbox" value="Reporte">
-                                                Reporte
-                                            </label>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            
-                            <div class="form-section">
-                                <h2 class="section-title">
-                                    <i class="fas fa-users"></i>
-                                    Participantes
-                                </h2>
-                                <div class="form-row">
-                                    <div class="form-group">
-                                        <label for="activityHombres">Hombres</label>
-                                        <input type="number" id="activityHombres" class="form-control" min="0" value="0">
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="activityMujeres">Mujeres</label>
-                                        <input type="number" id="activityMujeres" class="form-control" min="0" value="0">
-                                    </div>
-                                </div>
-                            </div>
-                            
-                            <div class="form-section">
-                                <h2 class="section-title">
-                                    <i class="fas fa-clipboard-check"></i>
-                                    Resultados y Observaciones
-                                </h2>
-                                <div class="form-row">
-                                    <div class="form-group full-width">
-                                        <label for="activityResultados">Resultados de la Actividad</label>
-                                        <textarea id="activityResultados" class="form-control" placeholder="Escribe aquí los Resultados de la Actividad" rows="4"></textarea>
-                                    </div>
-                                </div>
-                                <div class="form-row">
-                                    <div class="form-group full-width">
-                                        <label for="activityObservaciones">Observaciones o Comentarios</label>
-                                        <textarea id="activityObservaciones" class="form-control" placeholder="Escribe aquí los observaciones o comentarios" rows="4"></textarea>
-                                    </div>
-                                </div>
-                            </div>
-                            
-                            <div class="form-actions">
-                                <div class="modal-footer">
-                                    <div class="footer-buttons">
-                                        <button type="button" class="btn-clear" id="clearActivityForm">
-                                            <i class="fas fa-broom"></i>
-                                            Limpiar Formulario
-                                        </button>
-                                        <div class="modal-action-buttons">
-                                            <button type="button" class="btn-cancel" id="cancelActivityForm">
-                                                <i class="fas fa-times"></i>
-                                                Cancelar
-                                            </button>
-                                            <button type="submit" class="btn-save">
-                                                <i class="fas fa-save"></i>
-                                                Guardar Actividad
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- Modal: Detalles de la Actividad -->
-            <div class="modal" id="activityDetailModal">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h3>Detalles de la Actividad</h3>
-                        <button class="modal-close" id="closeActivityDetailModal">&times;</button>
-                    </div>
-                    <div class="modal-body">
-                        <div class="detail-container">
-                            <div class="detail-section">
-                                <h2 class="section-title">
-                                    <i class="fas fa-info-circle"></i>
-                                    Información General
-                                </h2>
-                                <div class="detail-grid">
-                                    <div class="detail-item">
-                                        <label>Fecha:</label>
-                                        <span id="detailFecha">-</span>
-                                    </div>
-                                    <div class="detail-item">
-                                        <label>Actividad:</label>
-                                        <span id="detailActividad">-</span>
-                                    </div>
-                                    <div class="detail-item">
-                                        <label>Estado:</label>
-                                        <span id="detailEstado">-</span>
-                                    </div>
-                                    <div class="detail-item">
-                                        <label>Hora de Inicio:</label>
-                                        <span id="detailHoraInicio">-</span>
-                                    </div>
-                                    <div class="detail-item">
-                                        <label>Hora de Finalización:</label>
-                                        <span id="detailHoraFin">-</span>
-                                    </div>
-                                </div>
-                            </div>
-                            
-                            <div class="detail-section">
-                                <h2 class="section-title">
-                                    <i class="fas fa-map"></i>
-                                    Ubicación
-                                </h2>
-                                <div class="detail-grid">
-                                    <div class="detail-item">
-                                        <label>Región:</label>
-                                        <span id="detailRegion">-</span>
-                                    </div>
-                                    <div class="detail-item">
-                                        <label>Departamento:</label>
-                                        <span id="detailDepartamento">-</span>
-                                    </div>
-                                    <div class="detail-item">
-                                        <label>Municipio:</label>
-                                        <span id="detailMunicipio">-</span>
-                                    </div>
-                                    <div class="detail-item">
-                                        <label>Distrito:</label>
-                                        <span id="detailDistrito">-</span>
-                                    </div>
-                                </div>
-                            </div>
-                            
-                            <div class="detail-section">
-                                <h2 class="section-title">
-                                    <i class="fas fa-users"></i>
-                                    Personal
-                                </h2>
-                                <div class="detail-grid">
-                                    <div class="detail-item">
-                                        <label>Técnico:</label>
-                                        <span id="detailTecnico">-</span>
-                                    </div>
-                                    <div class="detail-item">
-                                        <label>Usuario:</label>
-                                        <span id="detailUsuario">-</span>
-                                    </div>
-                                </div>
-                            </div>
-                            
-                            <div class="detail-section">
-                                <h2 class="section-title">
-                                    <i class="fas fa-tasks"></i>
-                                    Tareas Realizadas
-                                </h2>
-                                <div id="detailTareas" class="tareas-container">
-                                    <!-- Las tareas se cargarán aquí dinámicamente -->
-                                </div>
-                            </div>
-                            
-                            <div class="detail-section">
-                                <h2 class="section-title">
-                                    <i class="fas fa-user-friends"></i>
-                                    Participantes
-                                </h2>
-                                <div class="detail-grid">
-                                    <div class="detail-item">
-                                        <label>Hombres:</label>
-                                        <span id="detailHombres">-</span>
-                                    </div>
-                                    <div class="detail-item">
-                                        <label>Mujeres:</label>
-                                        <span id="detailMujeres">-</span>
-                                    </div>
-                                </div>
-                            </div>
-                            
-                            <div class="detail-section">
-                                <h2 class="section-title">
-                                    <i class="fas fa-clipboard-check"></i>
-                                    Resultados y Observaciones
-                                </h2>
-                                <div class="detail-full">
-                                    <div class="detail-item full-width">
-                                        <label>Resultados:</label>
-                                        <div id="detailResultados" class="detail-text">-</div>
-                                    </div>
-                                    <div class="detail-item full-width">
-                                        <label>Observaciones:</label>
-                                        <div id="detailObservaciones" class="detail-text">-</div>
-                                    </div>
-                                </div>
-                            </div>
-                            
-                            <div class="detail-section">
-                                <h2 class="section-title">
-                                    <i class="fas fa-calendar-alt"></i>
-                                    Información de Registro
-                                </h2>
-                                <div class="detail-grid">
-                                    <div class="detail-item">
-                                        <label>Fecha de Registro:</label>
-                                        <span id="detailFechaRegistro">-</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button class="btn btn-primary" id="closeDetailBtn">
-                            <i class="fas fa-times"></i>
-                            Cerrar
+                        <button class="export-option" data-format="pdf">
+                            <i class="fas fa-file-pdf"></i>
+                            PDF
                         </button>
                     </div>
                 </div>
             </div>
         </div>
-            <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-            <script src="JS/Services/data/geographicData.js"></script>
-            <script src="JS/Services/actividadService.js"></script>
-            <script src="JS/Controllers/actividadController.js"></script>
-<script>
-document.querySelector(".logout-btn").addEventListener("click", function(e) {
-    e.preventDefault(); // Evita que cambie de página de inmediato
 
-    Swal.fire({
-        title: "¿Cerrar sesión?",
-        text: "¿Estás seguro de que deseas cerrar sesión?",
-        icon: "warning",
-        showCancelButton: true,
-        confirmButtonText: "Sí, cerrar",
-        cancelButtonText: "Cancelar"
-    }).then((result) => {
-        if (result.isConfirmed) {
-            // Si confirma, lo enviamos al login
-            window.location.href = "login.html";
-        }
-    });
-});
-</script>
+        <div class="filter-section">
+            <div class="filter-row">
+                <div class="form-group">
+                    <label for="filterDate">Fecha</label>
+                    <input type="date" id="filterDate" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label for="filterActivity">Actividad</label>
+                    <select id="filterActivity" class="form-control">
+                        <option value="">Todas las actividades</option>
+                        <option value="capacitacion">Capacitación</option>
+                        <option value="simulacro">Simulacro</option>
+                        <option value="inspeccion">Inspección</option>
+                        <option value="evaluacion">Evaluación</option>
+                        <option value="coordinacion">Coordinación</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="filterRegion">Región</label>
+                    <select id="filterRegion" class="form-control">
+                        <option value="">Todas las regiones</option>
+                        <option value="Central">Central</option>
+                        <option value="Este">Este</option>
+                        <option value="Norte">Norte</option>
+                        <option value="Sur">Sur</option>
+                        <option value="Oeste">Oeste</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="filterStatus">Estado</label>
+                    <select id="filterStatusActividad" class="form-control">
+                        <option value="">Todos los estados</option>
+                        <option value="Completada">Completada</option>
+                        <option value="En Progreso">En Progreso</option>
+                        <option value="Pendiente">Pendiente</option>
+                        <option value="Cancelada">Cancelada</option>
+                    </select>
+                </div>
+            </div>
+            <div class="filter-actions">
+                <button class="btn btn-secondary" id="clearActivityFilters">
+                    <i class="fas fa-times"></i>
+                    Limpiar
+                </button>
+                <button class="btn btn-primary" id="applyActivityFilters">
+                    <i class="fas fa-filter"></i>
+                    Filtrar
+                </button>
+                <button class="btn btn-success" id="generateReport">
+                    <i class="fas fa-file-pdf"></i>
+                    Reporte
+                </button>
+            </div>
+        </div>
+
+        <div class="table-container activities-container">
+            <div class="table-header">
+                <div class="table-title">Lista de Actividades</div>
+                <div class="table-actions">
+                    <span class="table-info">Total: <strong id="activitiesTotal">0</strong> actividades</span>
+                </div>
+            </div>
+            <div class="table-scroll-wrapper">
+                <table class="activities-table">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Fecha</th>
+                            <th>Actividad</th>
+                            <th>Departamento</th>
+                            <th>Municipio</th>
+                            <th>Distrito</th>
+                            <th>Usuario</th>
+                            <th>Estado</th>
+                            <th>Opciones</th>
+                        </tr>
+                    </thead>
+                    <tbody id="activitiesTableBody">
+                        <!-- Las actividades se cargarán aquí dinámicamente desde la API -->
+                    </tbody>
+                </table>
+            </div>
+            <div class="pagination">
+                <div class="pagination-info">
+                    Mostrando registros del <span id="activitiesFrom">0</span> al <span id="activitiesTo">0</span> de un
+                    total de <span id="activitiesTotal">0</span> registros
+                </div>
+                <div class="pagination-controls" id="activitiesPagination">
+                    <!-- Controles de paginación se cargarán aquí -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal para nueva actividad -->
+        <div class="modal" id="activityModal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 id="modalActivityTitle">Registrar Nueva Actividad</h3>
+                    <button class="modal-close" id="closeActivityModal">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <form id="activityForm">
+                        <input type="hidden" id="activityId">
+                        <div class="form-section">
+                            <h2 class="section-title">
+                                <i class="fas fa-info-circle"></i>
+                                Información General
+                            </h2>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="activityEstado" class="required">Estado</label>
+                                    <select id="activityEstado" class="form-control" required>
+                                        <option value="">Seleccione</option>
+                                        <option value="Completada">Completada</option>
+                                        <option value="En Progreso">En Progreso</option>
+                                        <option value="Pendiente">Pendiente</option>
+                                        <option value="Cancelada">Cancelada</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="activityFecha" class="required">Fecha</label>
+                                    <input type="date" id="activityFecha" class="form-control" required>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="activityInicio" class="required">Hora de Inicio</label>
+                                    <input type="time" id="activityInicio" class="form-control" required value="08:00">
+                                </div>
+                                <div class="form-group">
+                                    <label for="activityFinalizacion" class="required">Hora de Finalización</label>
+                                    <input type="time" id="activityFinalizacion" class="form-control" required
+                                        value="17:00">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-section">
+                            <h2 class="section-title">
+                                <i class="fas fa-map"></i>
+                                Ubicación
+                            </h2>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="activityRegion" class="required">Región</label>
+                                    <select id="activityRegion" class="form-control" required>
+                                        <option value="">Seleccione una region</option>
+                                        <option value="Central">Central</option>
+                                        <option value="Paracentral">Paracentral</option>
+                                        <option value="Occidental">Occidental</option>
+                                        <option value="Oriental">Oriental</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="activityDepartamento" class="required">Departamento</label>
+                                    <select id="activityDepartamento" class="form-control" required>
+                                        <option value="">Seleccione un departamento</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="activityMunicipio" class="required">Municipio</label>
+                                    <select id="activityMunicipio" class="form-control" required>
+                                        <option value="">Seleccione un municipio</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="activityDistrito" class="required">Distrito</label>
+                                    <select id="activityDistrito" class="form-control" required>
+                                        <option value="">Seleccione un distrito</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-section">
+                            <h2 class="section-title">
+                                <i class="fas fa-tasks"></i>
+                                Detalles de la Actividad
+                            </h2>
+                            <div class="form-row">
+                                <div class="form-group full-width">
+                                    <label for="activityTipo" class="required">Tipo de Actividad</label>
+                                    <select id="activityTipo" class="form-control" required>
+                                        <option value="">Seleccione</option>
+                                        <option value="Capacitación en Liderazgo">Capacitación en Liderazgo</option>
+                                        <option value="Reunión de Coordinación">Reunión de Coordinación</option>
+                                        <option value="Visita de Supervisión">Visita de Supervisión</option>
+                                        <option value="Taller Comunitario">Taller Comunitario</option>
+                                        <option value="Monitoreo de Campo">Monitoreo de Campo</option>
+                                        <option value="Evaluación de Proyectos">Evaluación de Proyectos</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group full-width">
+                                    <label>Tareas (Puedes seleccionar varias)</label>
+
+                                    <div class="checkbox-group">
+                                        <label class="checkbox-item">
+                                            <input type="checkbox" value="Planificación">
+                                            Planificación
+                                        </label>
+
+                                        <label class="checkbox-item">
+                                            <input type="checkbox" value="Coordinación">
+                                            Coordinación
+                                        </label>
+
+                                        <label class="checkbox-item">
+                                            <input type="checkbox" value="Ejecución">
+                                            Ejecución
+                                        </label>
+
+                                        <label class="checkbox-item">
+                                            <input type="checkbox" value="Evaluación">
+                                            Evaluación
+                                        </label>
+
+                                        <label class="checkbox-item">
+                                            <input type="checkbox" value="Seguimiento">
+                                            Seguimiento
+                                        </label>
+
+                                        <label class="checkbox-item">
+                                            <input type="checkbox" value="Reporte">
+                                            Reporte
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-section">
+                            <h2 class="section-title">
+                                <i class="fas fa-users"></i>
+                                Participantes
+                            </h2>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="activityHombres">Hombres</label>
+                                    <input type="number" id="activityHombres" class="form-control" min="0" value="0">
+                                </div>
+                                <div class="form-group">
+                                    <label for="activityMujeres">Mujeres</label>
+                                    <input type="number" id="activityMujeres" class="form-control" min="0" value="0">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-section">
+                            <h2 class="section-title">
+                                <i class="fas fa-clipboard-check"></i>
+                                Resultados y Observaciones
+                            </h2>
+                            <div class="form-row">
+                                <div class="form-group full-width">
+                                    <label for="activityResultados">Resultados de la Actividad</label>
+                                    <textarea id="activityResultados" class="form-control"
+                                        placeholder="Escribe aquí los Resultados de la Actividad" rows="4"></textarea>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group full-width">
+                                    <label for="activityObservaciones">Observaciones o Comentarios</label>
+                                    <textarea id="activityObservaciones" class="form-control"
+                                        placeholder="Escribe aquí los observaciones o comentarios" rows="4"></textarea>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-actions">
+                            <div class="modal-footer">
+                                <div class="footer-buttons">
+                                    <button type="button" class="btn-clear" id="clearActivityForm">
+                                        <i class="fas fa-broom"></i>
+                                        Limpiar Formulario
+                                    </button>
+                                    <div class="modal-action-buttons">
+                                        <button type="button" class="btn-cancel" id="cancelActivityForm">
+                                            <i class="fas fa-times"></i>
+                                            Cancelar
+                                        </button>
+                                        <button type="submit" class="btn-save">
+                                            <i class="fas fa-save"></i>
+                                            Guardar Actividad
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- Modal: Detalles de la Actividad -->
+        <div class="modal" id="activityDetailModal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3>Detalles de la Actividad</h3>
+                    <button class="modal-close" id="closeActivityDetailModal">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <div class="detail-container">
+                        <div class="detail-section">
+                            <h2 class="section-title">
+                                <i class="fas fa-info-circle"></i>
+                                Información General
+                            </h2>
+                            <div class="detail-grid">
+                                <div class="detail-item">
+                                    <label>Fecha:</label>
+                                    <span id="detailFecha">-</span>
+                                </div>
+                                <div class="detail-item">
+                                    <label>Actividad:</label>
+                                    <span id="detailActividad">-</span>
+                                </div>
+                                <div class="detail-item">
+                                    <label>Estado:</label>
+                                    <span id="detailEstado">-</span>
+                                </div>
+                                <div class="detail-item">
+                                    <label>Hora de Inicio:</label>
+                                    <span id="detailHoraInicio">-</span>
+                                </div>
+                                <div class="detail-item">
+                                    <label>Hora de Finalización:</label>
+                                    <span id="detailHoraFin">-</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="detail-section">
+                            <h2 class="section-title">
+                                <i class="fas fa-map"></i>
+                                Ubicación
+                            </h2>
+                            <div class="detail-grid">
+                                <div class="detail-item">
+                                    <label>Región:</label>
+                                    <span id="detailRegion">-</span>
+                                </div>
+                                <div class="detail-item">
+                                    <label>Departamento:</label>
+                                    <span id="detailDepartamento">-</span>
+                                </div>
+                                <div class="detail-item">
+                                    <label>Municipio:</label>
+                                    <span id="detailMunicipio">-</span>
+                                </div>
+                                <div class="detail-item">
+                                    <label>Distrito:</label>
+                                    <span id="detailDistrito">-</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="detail-section">
+                            <h2 class="section-title">
+                                <i class="fas fa-users"></i>
+                                Personal
+                            </h2>
+                            <div class="detail-grid">
+                                <div class="detail-item">
+                                    <label>Técnico:</label>
+                                    <span id="detailTecnico">-</span>
+                                </div>
+                                <div class="detail-item">
+                                    <label>Usuario:</label>
+                                    <span id="detailUsuario">-</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="detail-section">
+                            <h2 class="section-title">
+                                <i class="fas fa-tasks"></i>
+                                Tareas Realizadas
+                            </h2>
+                            <div id="detailTareas" class="tareas-container">
+                                <!-- Las tareas se cargarán aquí dinámicamente -->
+                            </div>
+                        </div>
+
+                        <div class="detail-section">
+                            <h2 class="section-title">
+                                <i class="fas fa-user-friends"></i>
+                                Participantes
+                            </h2>
+                            <div class="detail-grid">
+                                <div class="detail-item">
+                                    <label>Hombres:</label>
+                                    <span id="detailHombres">-</span>
+                                </div>
+                                <div class="detail-item">
+                                    <label>Mujeres:</label>
+                                    <span id="detailMujeres">-</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="detail-section">
+                            <h2 class="section-title">
+                                <i class="fas fa-clipboard-check"></i>
+                                Resultados y Observaciones
+                            </h2>
+                            <div class="detail-full">
+                                <div class="detail-item full-width">
+                                    <label>Resultados:</label>
+                                    <div id="detailResultados" class="detail-text">-</div>
+                                </div>
+                                <div class="detail-item full-width">
+                                    <label>Observaciones:</label>
+                                    <div id="detailObservaciones" class="detail-text">-</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="detail-section">
+                            <h2 class="section-title">
+                                <i class="fas fa-calendar-alt"></i>
+                                Información de Registro
+                            </h2>
+                            <div class="detail-grid">
+                                <div class="detail-item">
+                                    <label>Fecha de Registro:</label>
+                                    <span id="detailFechaRegistro">-</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-primary" id="closeDetailBtn">
+                        <i class="fas fa-times"></i>
+                        Cerrar
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="JS/Services/data/geographicData.js"></script>
+    <script src="JS/Services/actividadService.js"></script>
+    <script src="JS/Controllers/actividadController.js"></script>
+    <script>
+        document.querySelector(".logout-btn").addEventListener("click", function (e) {
+            e.preventDefault(); // Evita que cambie de página de inmediato
+
+            Swal.fire({
+                title: "¿Cerrar sesión?",
+                text: "¿Estás seguro de que deseas cerrar sesión?",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonText: "Sí, cerrar",
+                cancelButtonText: "Cancelar"
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    // Si confirma, lo enviamos al login
+                    window.location.href = "login.html";
+                }
+            });
+        });
+    </script>
 </body>
+
 </html>
