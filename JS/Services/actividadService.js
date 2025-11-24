@@ -98,25 +98,26 @@ async getAllActividades(page = 0, size = 10) {
 
     // Convertir datos del formulario al formato DTO
     convertirFormDataADTO(formData) {
-        return {
-            estado: formData.estado,
-            fecha: formData.fecha,
-            h_inicio: formData.horaInicio,
-            h_Fin: formData.horaFin,
-            region: formData.region,
-            departamento: formData.departamento,
-            municipio: formData.municipio,
-            distrito: formData.distrito,
-            actividad_nombre: formData.actividad,
-            tarea: Array.isArray(formData.tareas) ? formData.tareas.join(', ') : formData.tareas,
-            hombres: parseInt(formData.participantesHombres) || 0,
-            mujeres: parseInt(formData.participantesMujeres) || 0,
-            resultados: formData.resultados,
-            observaciones: formData.observaciones,
-            respaldo: formData.respaldo || null,
-            Id_Usuario: this.obtenerUsuarioActualId() // Obtener ID del usuario logueado
-        };
-    }
+    return {
+        estado: formData.estado,
+        fecha: formData.fecha,
+        H_inicio: formData.horaInicio,       // Corrige mayúscula
+        H_Fin: formData.horaFin,             // Corrige mayúscula
+        region: formData.region,
+        departamento: formData.departamento,
+        municipio: formData.municipio,
+        distrito: formData.distrito,
+        tipoActividad: formData.tipoActividad,  // ✔️ corregido
+        tareas: formData.tareas,                   // ✔️ lista como pide el DTO
+        hombres: parseInt(formData.participantesHombres) || 0,
+        mujeres: parseInt(formData.participantesMujeres) || 0,
+        resultados: formData.resultados,
+        observaciones: formData.observaciones,
+        respaldo: formData.respaldo || "UNU",
+        Id_Usuario: this.obtenerUsuarioActualId()
+    };
+}
+
 
     // Convertir DTO a datos del formulario
     convertirDTOAFormData(actividadDTO) {
