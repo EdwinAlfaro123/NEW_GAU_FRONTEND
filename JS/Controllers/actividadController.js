@@ -213,6 +213,7 @@ class ActividadController {
 
     try {
         const formData = this.obtenerDatosFormulario();
+        if (!this.validarFormulario(formData)) return;
 
         const response = await this.actividadService.createActividad(formData);
 
@@ -290,49 +291,26 @@ class ActividadController {
     }
 
     // Métodos auxiliares
-obtenerDatosFormulario() {
-    const actividadId = document.getElementById("activityId").value;
-    const actividadNombre = document.getElementById("actividad_nombre").value;
-    const actividadDescripcion = document.getElementById("actividad_descripcion").value;
-    const actividadFecha = document.getElementById("actividad_fecha").value;
-
-    const formData = new FormData();
-
-    // Solo agrega ID si es edición
-    if (actividadId) {
-        formData.append("actividad_id", actividadId);
+    obtenerDatosFormulario() {
+    
+        return {
+            estado: document.getElementById("activityEstado").value,
+            fecha: document.getElementById("activityFecha").value,
+            H_inicio: document.getElementById("activityInicio").value,
+            H_Fin: document.getElementById("activityFinalizacion").value,
+            region: document.getElementById("activityRegion").value,
+            departamento: document.getElementById("activityDepartamento").value,
+            municipio: document.getElementById("activityMunicipio").value,
+            distrito: document.getElementById("activityDistrito").value,
+            actividad_nombre: document.getElementById("activityTipo").value,
+            hombres: parseInt(document.getElementById("activityHombres")?.value) || 0,
+            mujeres: parseInt(document.getElementById("activityMujeres")?.value) || 0,
+            resultados: document.getElementById("activityResultados")?.value || '',
+            tareas: this.obtenerValor("activityTareas") ? this.obtenerValor("activityTareas").split(',') : [], // si backend espera lista
+            observaciones: document.getElementById("activityObservaciones")?.value || '',
+            Id_Usuario: parseInt(document.getElementById("activityUsuario")?.value) || null
+        };
     }
-
-    // Basado EXACTO en tu DTO del backend
-    formData.append("actividad_nombre", actividadNombre);
-    formData.append("actividad_descripcion", actividadDescripcion);
-    formData.append("actividad_fecha", actividadFecha);
-
-// DEBUG TEMPORAL
-[
-    'activityEstado',
-    'activityFecha',
-    'activityInicio',
-    'activityFinalizacion',
-    'activityRegion',
-    'activityDepartamento',
-    'activityMunicipio',
-    'activityDistrito',
-    'activityTipo',
-    'activityHombres',
-    'activityMujeres',
-    'activityResultados',
-    'activityObservaciones'
-].forEach(id => {
-    const el = document.getElementById(id);
-    if (!el) console.error(`❌ No existe el elemento con id: ${id}`);
-});
-
-
-    return formData;
-}
-
-
 
 
     llenarFormularioActividad(actividad) {
@@ -350,8 +328,8 @@ obtenerDatosFormulario() {
         document.getElementById('activityMunicipio').value = formData.municipio;
         document.getElementById('activityTipo').value = formData.actividad;
         document.getElementById('activityTareas').value = formData.tareas;
-        document.getElementById('activityHombres').value = formData.participantesHombres;
-        document.getElementById('activityMujeres').value = formData.participantesMujeres;
+        document.getElementById('activityHombres').value = formData.hombres;
+        document.getElementById('activityMujeres').value = formData.mujeres;
         document.getElementById('activityResultados').value = formData.resultados;
         document.getElementById('activityObservaciones').value = formData.observaciones;
         

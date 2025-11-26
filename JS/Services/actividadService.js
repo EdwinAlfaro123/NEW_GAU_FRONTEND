@@ -1,40 +1,36 @@
-// JS/services/actividadService.js
 class ActividadService {
     constructor() {
         this.baseURL = 'http://localhost:8080/apiActividad';
     }
 
-async getAllActividades(page = 0, size = 10) {
-    try {
-        const response = await fetch(`${this.baseURL}/getAllActividades?page=${page}&size=${size}`);
+    async getAllActividades(page = 0, size = 10) {
+        try {
+            const response = await fetch(`${this.baseURL}/getAllActividades?page=${page}&size=${size}`);
 
-        if (!response.ok) {
-            // Si el backend devuelve 204 o error sin cuerpo
-            if (response.status === 204) {
+            if (!response.ok) {
+                if (response.status === 204) {
+                    return { content: [], totalElements: 0 };
+                }
+                throw new Error(`Error ${response.status}: ${response.statusText}`);
+            }
+
+            const raw = await response.text();
+            if (!raw || raw.trim() === "") {
                 return { content: [], totalElements: 0 };
             }
-            throw new Error(`Error ${response.status}: ${response.statusText}`);
-        }
 
-        // Leemos el body como texto porque a veces viene vacío
-        const raw = await response.text();
+            return JSON.parse(raw);
 
-        if (!raw || raw.trim() === "") {
+        } catch (error) {
+            console.error("Error al obtener actividades:", error);
             return { content: [], totalElements: 0 };
         }
-
-        return JSON.parse(raw);
-
-    } catch (error) {
-        console.error("Error al obtener actividades:", error);
-        return { content: [], totalElements: 0 }; // evitar que reviente dashboard.js
     }
-}
 
-
-
-    // Crear nueva actividad
     async createActividad(actividadData) {
+
+        console.log("📤 Enviando JSON al backend:", actividadData);
+
         try {
             const response = await fetch(`${this.baseURL}/newActividad`, {
                 method: 'POST',
@@ -44,21 +40,20 @@ async getAllActividades(page = 0, size = 10) {
                 body: JSON.stringify(actividadData)
             });
 
+            const text = await response.text();
+
             if (!response.ok) {
-                const text = await response.text();
                 throw new Error(`Error ${response.status}: ${text || response.statusText}`);
             }
 
-            const text = await response.text();
             return text ? JSON.parse(text) : null;
 
         } catch (error) {
-            console.error('Error al crear actividad:', error);
+            console.error('❌ Error al crear actividad:', error);
             throw error;
         }
     }
 
-    // Actualizar actividad existente
     async updateActividad(id, actividadData) {
         try {
             const response = await fetch(`${this.baseURL}/updateActividad/${id}`, {
@@ -79,7 +74,6 @@ async getAllActividades(page = 0, size = 10) {
         }
     }
 
-    // Eliminar actividad
     async deleteActividad(id) {
         try {
             const response = await fetch(`${this.baseURL}/deleteActividad/${id}`, {
@@ -96,55 +90,62 @@ async getAllActividades(page = 0, size = 10) {
         }
     }
 
-    // Convertir datos del formulario al formato DTO
+    // ✔ DTO CORRECTO
     convertirFormDataADTO(formData) {
-    return {
-        estado: formData.estado,
-        fecha: formData.fecha,
-        H_inicio: formData.horaInicio,       // Corrige mayúscula
-        H_Fin: formData.horaFin,             // Corrige mayúscula
-        region: formData.region,
-        departamento: formData.departamento,
-        municipio: formData.municipio,
-        distrito: formData.distrito,
-        tipoActividad: formData.tipoActividad,  // ✔️ corregido
-        tareas: formData.tareas,                   // ✔️ lista como pide el DTO
-        hombres: parseInt(formData.participantesHombres) || 0,
-        mujeres: parseInt(formData.participantesMujeres) || 0,
-        resultados: formData.resultados,
-        observaciones: formData.observaciones,
-        respaldo: formData.respaldo || "UNU",
-        Id_Usuario: this.obtenerUsuarioActualId()
-    };
-}
+        return {
+            id: formData.id || null,
 
+            // ✔ CAMPOS OBLIGATORIOS
+            actividad_nombre: formData.actividad,      // <--- ESTE FALTABA
+            estado: formData.estado,
+            fecha: formData.fecha,
 
-    // Convertir DTO a datos del formulario
+            H_inicio: formData.horaInicio,
+            H_Fin: formData.horaFin,
+
+            // ✔ DATOS DE UBICACIÓN
+            region: formData.region,
+            departamento: formData.departamento,
+            municipio: formData.municipio,
+            distrito: formData.distrito,
+
+            // ✔ EL BACKEND USA actividad_tipo
+            actividad_tipo: formData.tipoActividad,
+
+            // ✔ TAREAS DEBE SER LISTA
+            tareas: formData.tareas ? formData.tareas.split(",").map(t => t.trim()) : [],
+
+            hombres: parseInt(formData.participantesHombres) || 0,
+            mujeres: parseInt(formData.participantesMujeres) || 0,
+
+            resultados: formData.resultados,
+            observaciones: formData.observaciones,
+
+            respaldo: formData.respaldo || "UNU",
+
+            Id_Usuario: this.obtenerUsuarioActualId()
+        };
+    }
+
     convertirDTOAFormData(actividadDTO) {
-    return {
-        id: actividadDTO.id,
-        estado: actividadDTO.estado,
-        fecha: actividadDTO.fecha,
-        horaInicio: actividadDTO.H_inicio,
-        horaFin: actividadDTO.H_Fin,
-        region: actividadDTO.region,
-        departamento: actividadDTO.departamento,
-        municipio: actividadDTO.municipio,
-        distrito: actividadDTO.distrito,
-        actividad: actividadDTO.actividad_nombre,
-        tareas: Array.isArray(actividadDTO.tareas) ? actividadDTO.tareas : [],
-        hombres: actividadDTO.hombres,
-        mujeres: actividadDTO.mujeres,
-        resultados: actividadDTO.resultados,
-        observaciones: actividadDTO.observaciones,
-        respaldo: actividadDTO.respaldo
-    };
-}
-
-    // Obtener ID del usuario actual (simulado - en producción vendría del token/auth)
-    obtenerUsuarioActualId() {
-        // Por ahora retornamos 1 como usuario por defecto
-        // En producción esto debería venir del sistema de autenticación
-        return 1;
+        return {
+            id: actividadDTO.id,
+            actividad: actividadDTO.actividad_nombre,
+            estado: actividadDTO.estado,
+            fecha: actividadDTO.fecha,
+            horaInicio: actividadDTO.H_inicio,
+            horaFin: actividadDTO.H_Fin,
+            region: actividadDTO.region,
+            departamento: actividadDTO.departamento,
+            municipio: actividadDTO.municipio,
+            distrito: actividadDTO.distrito,
+            tipoActividad: actividadDTO.actividad_tipo,
+tareas: actividadDTO.tareas || [], 
+            hombres: actividadDTO.hombres,
+            mujeres: actividadDTO.mujeres,
+            resultados: actividadDTO.resultados,
+            observaciones: actividadDTO.observaciones,
+            respaldo: actividadDTO.respaldo
+        };
     }
 }
