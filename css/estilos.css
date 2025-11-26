@@ -4,10 +4,10 @@
 
 body {
     margin: 0;
-    font-family: Arial, Helvetica, sans-serif;
     background: linear-gradient(to bottom right, #eef1f6, #dfe3eb);
 }
 
+/* CONTENEDOR */
 .container {
     width: 100%;
     max-width: 900px;
@@ -19,6 +19,7 @@ body {
     text-align: center;
 }
 
+/* LOGO */
 .logo {
     width: 110px;
     margin-bottom: 10px;
@@ -48,6 +49,7 @@ label {
     font-weight: bold;
 }
 
+/* INPUT BOX */
 .input-box {
     width: 100%;
     margin-top: 8px;
@@ -74,6 +76,14 @@ input {
     align-items: center;
 }
 
+/* OJO */
+.toggle-eye {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+}
+
+/* BOTÓN */
 .btn {
     width: 100%;
     background: #2e3a4d;
@@ -103,23 +113,79 @@ input {
 .forgot:hover {
     text-decoration: underline;
 }
-/* EVITAR QUE LOS INPUTS SE SALGAN DEL CONTENEDOR */
+
+/* EVITA DESBORDES */
 .input-box, input {
     box-sizing: border-box;
 }
 
-/* RESPONSIVE: AJUSTA ESPACIOS PARA QUE TODO QUEDE DENTRO */
+/* =============================== */
+/*        RESPONSIVE GENERAL       */
+/* =============================== */
+
+/* TABLETS */
+@media (max-width: 900px) {
+
+    .container {
+        padding: 35px 40px;
+        max-width: 95%;
+    }
+
+    h1 {
+        font-size: 28px;
+    }
+
+    .subtitle {
+        font-size: 17px;
+    }
+}
+
+/* TELÉFONOS GRANDES */
 @media (max-width: 600px) {
 
     .container {
-        padding: 25px 20px; /* Reduce padding interno */
+        padding: 25px 20px;
     }
 
     .input-box {
-        padding: 12px 14px; /* Reduce padding para evitar que sobresalga */
+        padding: 12px 14px;
     }
 
     input {
         font-size: 14px;
+    }
+
+    h1 {
+        font-size: 26px;
+    }
+
+    .subtitle {
+        font-size: 16px;
+    }
+}
+
+/* TELÉFONOS PEQUEÑOS */
+@media (max-width: 420px) {
+
+    .container {
+        padding: 20px 16px;
+    }
+
+    h1 {
+        font-size: 22px;
+    }
+
+    .logo {
+        width: 85px;
+    }
+
+    .input-box {
+        padding: 10px 12px;
+        gap: 8px;
+    }
+
+    .btn {
+        padding: 14px;
+        font-size: 16px;
     }
 }
