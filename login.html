@@ -4,7 +4,14 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Login | Protección Civil</title>
+
+    <!-- Estilos propios -->
     <link rel="stylesheet" href="css/estilos.css">
+
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
 </head>
 <body>
 
@@ -24,7 +31,7 @@
 
     <form id="loginForm">
 
-        <!-- USERNAME / EMAIL -->
+        <!-- EMAIL -->
         <label>Email</label>
         <div class="input-box">
             <span class="icon">
@@ -36,7 +43,7 @@
             <input id="usuario" type="text" placeholder="Ingrese su correo" required />
         </div>
 
-        <!-- PASSWORD -->
+        <!-- CONTRASEÑA -->
         <label style="margin-top: 18px; display:block;">Contraseña</label>
         <div class="input-box">
             <span class="icon">
@@ -60,11 +67,10 @@
 
 </div>
 
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<!-- SweetAlert2 CDN -->
 
-<!-- CONTROLADOR ÚNICO -->
-<script type="module" src="./JS/Controllers/loginController.js"></script>
+<!-- Controlador -->
+<script type="module" src="./js/Controllers/loginController.js"></script>
 
 </body>
 </html>

@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard | Protección Civil</title>
-          <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="css/dashboard.css">
 </head>
 <body>
@@ -22,113 +22,118 @@
         </div>
 
         <!-- COLUMNA CENTRAL -->
-    <div class="nav-center">
-
-        <!-- USUARIOS -->
-        <a href="usuarios.html" class="nav-link nav-usuarios">
-            <span class="icon">
-                <i class="fa-solid fa-users"></i>
-            </span>
-            Usuarios
-        </a>
-
-        <!-- ACTIVIDADES -->
-        <a href="actividades.html" class="nav-link nav-actividades active">
-            <span class="icon">
-                <i class="fa-solid fa-list-check"></i>
-            </span>
-            Actividades
-        </a>
-
-    </div>
-
-        <!-- COLUMNA DERECHA -->
-    <div class="nav-right">
-
-        <!-- ICONO DE PERFIL -->
-        <div class="user-circle">
-            <i class="fa-solid fa-user"></i>
+        <div class="nav-center">
+            <a href="usuarios.html" class="nav-link nav-usuarios">
+                <span class="icon">
+                    <i class="fa-solid fa-users"></i>
+                </span>
+                Usuarios
+            </a>
+            <a href="actividades.html" class="nav-link nav-actividades active">
+                <span class="icon">
+                    <i class="fa-solid fa-list-check"></i>
+                </span>
+                Actividades
+            </a>
         </div>
 
-        <span class="username" id="usernameDisplay">Usuario</span>
+        <!-- COLUMNA DERECHA -->
+        <div class="nav-right">
+            <div class="user-circle">
+                <i class="fa-solid fa-user"></i>
+            </div>
 
-        <!-- CERRAR SESIÓN -->
-        <a href="login.html" class="logout-btn">
-            <i class="fa-solid fa-right-from-bracket"></i>
-            Cerrar Sesión
-        </a>
-    </div>
+            <span class="username" id="usernameDisplay">Usuario</span>
+
+            <a href="#" class="logout-btn">
+                <i class="fa-solid fa-right-from-bracket"></i>
+                Cerrar Sesión
+            </a>
+        </div>
 
     </nav>
 
     <!-- CONTENIDO PRINCIPAL -->
     <div class="main-content">
-
         <h1 class="main-title">DASHBOARD PRINCIPAL</h1>
         <p class="main-subtitle">Bienvenido al Sistema de Gestión de Protección Civil</p>
-
         <hr class="divider">
 
         <!-- TARJETAS -->
-<div class="cards-container">
-
-    <!-- ACTIVIDADES -->
-    <div class="card">
-        <div class="card-content card-flex">
-            
-            <span class="card-icon">
-                <i class="fa-solid fa-list-check"></i>
-            </span>
-
-            <div class="card-text">
-                <h3>ACTIVIDADES</h3>
-                <p>Registradas</p>
+        <div class="cards-container">
+            <div class="card">
+                <div class="card-content card-flex">
+                    <span class="card-icon"><i class="fa-solid fa-list-check"></i></span>
+                    <div class="card-text">
+                        <h3>ACTIVIDADES</h3>
+                        <p>Registradas</p>
+                    </div>
+                    <span class="card-number">12</span>
+                </div>
             </div>
 
-            <span class="card-number">12</span>
+            <div class="card">
+                <div class="card-content card-flex">
+                    <span class="card-icon"><i class="fa-solid fa-users"></i></span>
+                    <div class="card-text">
+                        <h3>USUARIOS</h3>
+                        <p>Activos</p>
+                    </div>
+                    <span class="card-number">8</span>
+                </div>
+            </div>
         </div>
     </div>
 
-    <!-- USUARIOS -->
-    <div class="card">
-        <div class="card-content card-flex">
-            
-            <span class="card-icon">
-                <i class="fa-solid fa-users"></i>
-            </span>
-
-            <div class="card-text">
-                <h3>USUARIOS</h3>
-                <p>Activos</p>
-            </div>
-
-            <span class="card-number">8</span>
-        </div>
-    </div>
-
-</div>
-
-    </div>
+    <!-- SweetAlert2 -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-<script>
-document.querySelector(".logout-btn").addEventListener("click", function(e) {
-    e.preventDefault(); // Evita que cambie de página de inmediato
 
-    Swal.fire({
-        title: "¿Cerrar sesión?",
-        text: "¿Estás seguro de que deseas cerrar sesión?",
-        icon: "warning",
-        showCancelButton: true,
-        confirmButtonText: "Sí, cerrar",
-        cancelButtonText: "Cancelar"
-    }).then((result) => {
-        if (result.isConfirmed) {
-            // Si confirma, lo enviamos al login
-            window.location.href = "login.html";
+    <!-- Controlador de sesión -->
+    <script type="module">
+        // Obtiene usuario del localStorage
+        function getUsuarioLogueado() {
+            const u = localStorage.getItem("usuario");
+            if (!u) return null;
+            try {
+                return JSON.parse(u);
+            } catch (err) {
+                console.error("Error parseando usuario en localStorage:", err);
+                return null;
+            }
         }
-    });
-});
-</script>
+
+        function clearUsuarioLogueado() {
+            localStorage.removeItem("usuario");
+        }
+
+        // Mostrar nombre de usuario en la barra
+        const usuario = getUsuarioLogueado();
+        if (!usuario || !usuario.email) {
+            // Si no hay sesión, redirige al login
+            window.location.href = "login.html";
+        } else {
+            document.getElementById("usernameDisplay").textContent = usuario.email;
+        }
+
+        // Cerrar sesión
+        document.querySelector(".logout-btn").addEventListener("click", function(e) {
+            e.preventDefault(); // Evita navegación inmediata
+
+            Swal.fire({
+                title: "¿Cerrar sesión?",
+                text: "¿Estás seguro de que deseas cerrar sesión?",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonText: "Sí, cerrar",
+                cancelButtonText: "Cancelar"
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    clearUsuarioLogueado();
+                    window.location.href = "login.html";
+                }
+            });
+        });
+    </script>
 
 </body>
 </html>

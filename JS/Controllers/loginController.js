@@ -1,14 +1,14 @@
-// =====================================================
-// IMPORTS
-// =====================================================
-import { login, getUsuarioLogueado } from "../Services/loginService.js";
+// JS/Controllers/loginController.js
+import { login } from "../Services/loginService.js";
 
 document.addEventListener("DOMContentLoaded", () => {
   const usuario = getUsuarioLogueado();
 
-  // Si ya existe sesión → ir al dashboard
-  if (usuario) {
-    window.location.href = "../dashboard/index.html";
+  console.log("Usuario en localStorage:", usuario); // Depuración
+
+  // Redirige solo si usuario existe y tiene email válido
+  if (usuario && usuario.email) {
+    window.location.href = "dashboard.html"; // Ajusta la ruta si es necesario
     return;
   }
 
@@ -16,9 +16,9 @@ document.addEventListener("DOMContentLoaded", () => {
   initLogin();
 });
 
-// =====================================================
-// INIT LOGIN
-// =====================================================
+// ======================================================
+// Inicializa el formulario de login
+// ======================================================
 function initLogin() {
   const form = document.getElementById("loginForm");
   if (!form) return;
@@ -37,28 +37,29 @@ function initLogin() {
 
     const originalHTML = btn.innerHTML;
     btn.disabled = true;
-    btn.innerHTML = `
-      <span class="spinner-border spinner-border-sm"></span> Verificando...
-    `;
+    btn.innerHTML = `<span class="spinner-border spinner-border-sm"></span> Verificando...`;
 
     try {
-      // Llamada al servicio real
-      const r = await login(email, pass);
+      const response = await login(email, pass);
 
-      console.log(">>> RESPUESTA DEL BACKEND:", r);
+      console.log(">>> RESPUESTA DEL BACKEND:", response);
 
-      // El backend devuelve: { status, token, user:{...} }
-      const user = r.user || r.data; // Ajusta según tu backend
-      const nombre = user?.nombreUsuario || user?.nombre || user?.correo || "Usuario";
+      if (!response.user) {
+        throw new Error("Usuario no encontrado");
+      }
+
+      const user = response.user;
+      // Guardamos la sesión en localStorage
+      localStorage.setItem("usuario", JSON.stringify(user));
 
       Swal.fire({
         icon: "success",
         title: "Inicio exitoso",
-        text: `Bienvenido ${nombre}`,
+        text: `Bienvenido ${user.email || "Usuario"}`,
         timer: 2000,
         showConfirmButton: false,
       }).then(() => {
-        window.location.href = "../dashboard/index.html";
+        window.location.href = "dashboard.html";
       });
 
     } catch (err) {
@@ -75,9 +76,9 @@ function initLogin() {
   });
 }
 
-// =====================================================
-// TOGGLE PASSWORD
-// =====================================================
+// ======================================================
+// Toggle de contraseña
+// ======================================================
 function initTogglePassword() {
   const btn = document.getElementById("btnTogglePwd");
   const input = document.getElementById("password");
@@ -91,4 +92,26 @@ function initTogglePassword() {
     icon.classList.toggle("fa-eye");
     icon.classList.toggle("fa-eye-slash");
   });
+}
+
+// ======================================================
+// Función para obtener usuario de localStorage
+// ======================================================
+export function getUsuarioLogueado() {
+  const u = localStorage.getItem("usuario");
+  if (!u) return null;
+
+  try {
+    return JSON.parse(u);
+  } catch (err) {
+    console.error("Error parseando usuario en localStorage:", err);
+    return null;
+  }
+}
+
+// ======================================================
+// Función para limpiar sesión manual (opcional)
+// ======================================================
+export function clearUsuarioLogueado() {
+  localStorage.removeItem("usuario");
 }
